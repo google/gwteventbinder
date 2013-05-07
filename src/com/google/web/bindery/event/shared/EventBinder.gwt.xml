@@ -1,0 +1,5 @@
+<module>
+  <generate-with class="com.google.web.bindery.event.shared.rebind.EventBinderGenerator">
+    <when-type-assignable class="com.google.web.bindery.event.shared.EventBinder"/>
+  </generate-with>
+</module>
