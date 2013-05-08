@@ -13,7 +13,10 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.google.web.bindery.event.shared;
+package com.google.web.bindery.event.shared.binder.impl;
+
+import com.google.web.bindery.event.shared.binder.EventBinder;
+import com.google.web.bindery.event.shared.binder.GenericEvent;
 
 /**
  * The API that a {@link GenericEvent} uses to send events to generated code.

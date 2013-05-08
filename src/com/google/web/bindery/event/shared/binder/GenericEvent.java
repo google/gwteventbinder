@@ -13,9 +13,11 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.google.web.bindery.event.shared;
+package com.google.web.bindery.event.shared.binder;
 
 import com.google.gwt.event.shared.GwtEvent;
+import com.google.web.bindery.event.shared.binder.impl.GenericEventHandler;
+import com.google.web.bindery.event.shared.binder.impl.GenericEventType;
 
 /**
  * Base class for all events fired on the event bus. Subclasses of this can be

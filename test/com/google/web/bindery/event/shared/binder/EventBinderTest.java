@@ -13,10 +13,15 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.google.web.bindery.event.shared;
+package com.google.web.bindery.event.shared.binder;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.junit.client.GWTTestCase;
+import com.google.web.bindery.event.shared.EventBus;
+import com.google.web.bindery.event.shared.HandlerRegistration;
+import com.google.web.bindery.event.shared.SimpleEventBus;
+import com.google.web.bindery.event.shared.binder.EventBinder;
+import com.google.web.bindery.event.shared.binder.GenericEvent;
 
 /**
  * End-to-end test of {@link EventBinder} and associated classes.
@@ -27,7 +32,7 @@ public class EventBinderTest extends GWTTestCase {
 
   @Override
   public String getModuleName() {
-    return "com.google.web.bindery.event.shared.EventBinder";
+    return "com.google.web.bindery.event.EventBinder";
   }
 
   public void testEventBinder() {

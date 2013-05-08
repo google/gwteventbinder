@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.google.web.bindery.event.shared.rebind;
+package com.google.web.bindery.event.gwt.rebind.binder;
 
 import com.google.gwt.core.ext.TreeLogger;
 import com.google.gwt.core.ext.TreeLogger.Type;
@@ -21,11 +21,11 @@ import com.google.gwt.core.ext.UnableToCompleteException;
 import com.google.gwt.core.ext.typeinfo.JClassType;
 import com.google.gwt.core.ext.typeinfo.JMethod;
 import com.google.gwt.user.rebind.SourceWriter;
-import com.google.web.bindery.event.shared.EventHandler;
+import com.google.web.bindery.event.shared.binder.EventHandler;
 
 /**
  * Writes implementations of
- * {@link com.google.web.bindery.event.shared.AbstractEventBinder}. The
+ * {@link com.google.web.bindery.event.shared.binder.impl.AbstractEventBinder}. The
  * generated class implements the single abstract doBindEventHandlers method by
  * calling bind() for each method in the target annotated with
  * {@link EventHandler}.

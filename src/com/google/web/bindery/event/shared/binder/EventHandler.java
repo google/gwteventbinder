@@ -13,7 +13,9 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.google.web.bindery.event.shared;
+package com.google.web.bindery.event.shared.binder;
+
+import com.google.web.bindery.event.shared.EventBus;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

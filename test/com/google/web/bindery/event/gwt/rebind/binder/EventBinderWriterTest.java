@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.google.web.bindery.event.shared.rebind;
+package com.google.web.bindery.event.gwt.rebind.binder;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
@@ -33,8 +33,8 @@ import com.google.gwt.core.ext.typeinfo.JMethod;
 import com.google.gwt.core.ext.typeinfo.JType;
 import com.google.gwt.user.rebind.SourceWriter;
 import com.google.gwt.user.rebind.StringSourceWriter;
-import com.google.web.bindery.event.shared.EventHandler;
-import com.google.web.bindery.event.shared.rebind.EventBinderWriter;
+import com.google.web.bindery.event.gwt.rebind.binder.EventBinderWriter;
+import com.google.web.bindery.event.shared.binder.EventHandler;
 
 import org.junit.Before;
 import org.junit.Test;

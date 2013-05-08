@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.google.web.bindery.event.shared.rebind;
+package com.google.web.bindery.event.gwt.rebind.binder;
 
 import static com.google.gwt.dev.util.Preconditions.checkArgument;
 
@@ -27,12 +27,12 @@ import com.google.gwt.core.ext.typeinfo.NotFoundException;
 import com.google.gwt.core.ext.typeinfo.TypeOracle;
 import com.google.gwt.user.rebind.ClassSourceFileComposerFactory;
 import com.google.gwt.user.rebind.SourceWriter;
-import com.google.web.bindery.event.shared.GenericEvent;
-import com.google.web.bindery.event.shared.AbstractEventBinder;
-import com.google.web.bindery.event.shared.EventBinder;
 import com.google.web.bindery.event.shared.EventBus;
-import com.google.web.bindery.event.shared.GenericEventHandler;
 import com.google.web.bindery.event.shared.HandlerRegistration;
+import com.google.web.bindery.event.shared.binder.EventBinder;
+import com.google.web.bindery.event.shared.binder.GenericEvent;
+import com.google.web.bindery.event.shared.binder.impl.AbstractEventBinder;
+import com.google.web.bindery.event.shared.binder.impl.GenericEventHandler;
 
 import java.io.PrintWriter;
 import java.util.LinkedList;

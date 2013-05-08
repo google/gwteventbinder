@@ -15,7 +15,7 @@
 -->
 
 <module>
-  <generate-with class="com.google.web.bindery.event.shared.rebind.EventBinderGenerator">
-    <when-type-assignable class="com.google.web.bindery.event.shared.EventBinder"/>
+  <generate-with class="com.google.web.bindery.event.gwt.rebind.binder.EventBinderGenerator">
+    <when-type-assignable class="com.google.web.bindery.event.shared.binder.EventBinder"/>
   </generate-with>
 </module>

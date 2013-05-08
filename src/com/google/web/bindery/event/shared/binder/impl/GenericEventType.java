@@ -13,18 +13,19 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.google.web.bindery.event.shared;
+package com.google.web.bindery.event.shared.binder.impl;
 
 import com.google.gwt.event.shared.GwtEvent.Type;
+import com.google.web.bindery.event.shared.binder.EventBinder;
+import com.google.web.bindery.event.shared.binder.GenericEvent;
 
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * A wrapper around GWT's event type that lets us write
- * {@literal EventType<SomeEvent>} rather than
- * {@literal Type<GenericEventHandler<SomeEvent>>}. Users shouldn't need to
- * reference this class directly.
+ * Utility to maintain a mapping from subtypes of {@link GenericEvent} to 
+ * {@link Type}s for those events. Users shouldn't need to reference this class
+ * directly.
  *
  * @author ekuefler@google.com (Erik Kuefler)
  */
