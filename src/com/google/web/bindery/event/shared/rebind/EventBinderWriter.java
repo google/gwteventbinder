@@ -74,10 +74,10 @@ class EventBinderWriter {
       throw new UnableToCompleteException();
     }
     String eventType = method.getParameterTypes()[0].getQualifiedSourceName();
-    writer.println("bind(eventBus, registrations, %1$s.class, new GenericEventHandler<%1$s>() {",
+    writer.println("bind(eventBus, registrations, %s.class, new GenericEventHandler() {",
         eventType);
-    writer.indentln("public void handleEvent(%s event) { target.%s(event); }",
-        eventType, method.getName());
+    writer.indentln("public void handleEvent(GenericEvent event) { target.%s((%s) event); }",
+        method.getName(), eventType);
     writer.println("});");
   }
 

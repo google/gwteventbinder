@@ -36,7 +36,7 @@ import com.google.gwt.event.shared.GwtEvent;
  * <p>
  * A complete example of a single-argument event is shown below:
  * <pre>
- * public class ContactsLoadedEvent extends GenericEvent&lt;ContactsLoadedEvent&gt; {
+ * public class ContactsLoadedEvent extends GenericEvent {
  *
  *   private final List&lt;Contacts&gt; contacts;
  *
@@ -52,26 +52,14 @@ import com.google.gwt.event.shared.GwtEvent;
  *
  * @author ekuefler@google.com (Erik Kuefler)
  */
-public abstract class GenericEvent<T extends GenericEvent<T>>
-    extends GwtEvent<GenericEventHandler<T>> {
-
+public abstract class GenericEvent extends GwtEvent<GenericEventHandler> {
   @Override
-  public EventType<T> getAssociatedType() {
-    // Since T extends GenericEvent<T>, this cast will always be safe.
-    @SuppressWarnings("unchecked")
-    Class<T> subClass = (Class<T>) getSubtype().getClass();
-    return EventType.getTypeOf(subClass);
+  public GenericEventType getAssociatedType() {
+    return GenericEventType.getTypeOf(getClass());
   }
 
   @Override
-  protected void dispatch(GenericEventHandler<T> handler) {
-    handler.handleEvent(getSubtype());
-  }
-
-  private T getSubtype() {
-    // Since T extends GenericEvent<T>, this cast will always be safe.
-    @SuppressWarnings("unchecked")
-    T subType = (T) this;
-    return subType;
+  protected void dispatch(GenericEventHandler handler) {
+    handler.handleEvent(this);
   }
 }

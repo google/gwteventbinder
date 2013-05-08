@@ -28,9 +28,10 @@ import java.util.Map;
  *
  * @author ekuefler@google.com (Erik Kuefler)
  */
-public class EventType<T extends GenericEvent<T>> extends Type<GenericEventHandler<T>> {
+public class GenericEventType extends Type<GenericEventHandler> {
 
-  private static final Map<Class<?>, EventType<?>> TYPE_MAP = new HashMap<Class<?>, EventType<?>>();
+  private static final Map<Class<?>, GenericEventType> TYPE_MAP =
+      new HashMap<Class<?>, GenericEventType>();
 
   /**
    * Creates a new EventType for the given event class. Repeated invocations of
@@ -38,16 +39,12 @@ public class EventType<T extends GenericEvent<T>> extends Type<GenericEventHandl
    * called by generated {@link EventBinder}s and shouldn't normally have to be
    * called directly by users.
    */
-  public static <T extends GenericEvent<T>> EventType<T> getTypeOf(Class<T> clazz) {
+  public static <T extends GenericEvent> GenericEventType getTypeOf(Class<T> clazz) {
     if (!TYPE_MAP.containsKey(clazz)) {
-      TYPE_MAP.put(clazz, new EventType<T>());
+      TYPE_MAP.put(clazz, new GenericEventType());
     }
-
-    // We guarantee that the value in the map is a class corresponding to the string key
-    @SuppressWarnings("unchecked")
-    EventType<T> type = (EventType<T>) TYPE_MAP.get(clazz);
-    return type;
+    return TYPE_MAP.get(clazz);
   }
 
-  private EventType() {}
+  private GenericEventType() {}
 }

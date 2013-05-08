@@ -25,10 +25,8 @@ package com.google.web.bindery.event.shared;
  * {@link EventBinder} , so users should not have to reference this class unless
  * they choose to bind events manually.
  *
- * @param <T> the type of event being handled
  * @author ekuefler@google.com (Erik Kuefler)
  */
-public interface GenericEventHandler<T extends GenericEvent<T>>
-    extends com.google.gwt.event.shared.EventHandler {
-  void handleEvent(T event);
+public interface GenericEventHandler extends com.google.gwt.event.shared.EventHandler {
+  void handleEvent(GenericEvent event);
 }

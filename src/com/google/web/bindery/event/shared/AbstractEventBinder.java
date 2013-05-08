@@ -51,11 +51,11 @@ public abstract class AbstractEventBinder<T> implements EventBinder<T> {
    * into a method here instead of generated directly in order to simplify the generated code and
    * save a little space.
    */
-  protected final <U extends GenericEvent<U>> void bind(
+  protected final <U extends GenericEvent> void bind(
       EventBus eventBus,
       List<HandlerRegistration> registrations,
       Class<U> type,
-      GenericEventHandler<U> handler) {
-    registrations.add(eventBus.addHandler(EventType.getTypeOf(type), handler));
+      GenericEventHandler handler) {
+    registrations.add(eventBus.addHandler(GenericEventType.getTypeOf(type), handler));
   }
 }

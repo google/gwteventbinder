@@ -80,11 +80,11 @@ public class EventBinderWriterTest {
         "protected List<HandlerRegistration> doBindEventHandlers("
             + "final MyTarget target, EventBus eventBus) {",
         "  List<HandlerRegistration> registrations = new LinkedList<HandlerRegistration>();",
-        "  bind(eventBus, registrations, MyEvent1.class, new GenericEventHandler<MyEvent1>() {",
-        "    public void handleEvent(MyEvent1 event) { target.method1(event); }",
+        "  bind(eventBus, registrations, MyEvent1.class, new GenericEventHandler() {",
+        "    public void handleEvent(GenericEvent event) { target.method1((MyEvent1) event); }",
         "  });",
-        "  bind(eventBus, registrations, MyEvent2.class, new GenericEventHandler<MyEvent2>() {",
-        "    public void handleEvent(MyEvent2 event) { target.method2(event); }",
+        "  bind(eventBus, registrations, MyEvent2.class, new GenericEventHandler() {",
+        "    public void handleEvent(GenericEvent event) { target.method2((MyEvent2) event); }",
         "  });",
         "  return registrations;",
         "}"), output.toString());
