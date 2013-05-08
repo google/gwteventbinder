@@ -16,7 +16,7 @@
 package com.google.web.bindery.event.shared;
 
 /**
- * The API that an {@link AbstractEvent} uses to send events to generated code.
+ * The API that a {@link GenericEvent} uses to send events to generated code.
  * Instances of this class will be generated automatically when constructing an
  * EventBinder. Having a single generic handler means that we don't have to
  * define a separate handler interface for each type of event.
@@ -28,7 +28,7 @@ package com.google.web.bindery.event.shared;
  * @param <T> the type of event being handled
  * @author ekuefler@google.com (Erik Kuefler)
  */
-public interface GenericEventHandler<T extends AbstractEvent<T>>
+public interface GenericEventHandler<T extends GenericEvent<T>>
     extends com.google.gwt.event.shared.EventHandler {
   void handleEvent(T event);
 }

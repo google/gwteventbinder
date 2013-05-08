@@ -28,7 +28,7 @@ import java.util.Map;
  *
  * @author ekuefler@google.com (Erik Kuefler)
  */
-public class EventType<T extends AbstractEvent<T>> extends Type<GenericEventHandler<T>> {
+public class EventType<T extends GenericEvent<T>> extends Type<GenericEventHandler<T>> {
 
   private static final Map<Class<?>, EventType<?>> TYPE_MAP = new HashMap<Class<?>, EventType<?>>();
 
@@ -38,7 +38,7 @@ public class EventType<T extends AbstractEvent<T>> extends Type<GenericEventHand
    * called by generated {@link EventBinder}s and shouldn't normally have to be
    * called directly by users.
    */
-  public static <T extends AbstractEvent<T>> EventType<T> getTypeOf(Class<T> clazz) {
+  public static <T extends GenericEvent<T>> EventType<T> getTypeOf(Class<T> clazz) {
     if (!TYPE_MAP.containsKey(clazz)) {
       TYPE_MAP.put(clazz, new EventType<T>());
     }

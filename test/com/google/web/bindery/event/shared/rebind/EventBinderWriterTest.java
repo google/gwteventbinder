@@ -54,13 +54,13 @@ public class EventBinderWriterTest {
 
   @Mock private JClassType target;
   @Mock private TreeLogger logger;
-  @Mock private JClassType abstractEventType;
+  @Mock private JClassType genericEventType;
   private EventBinderWriter writer;
   private SourceWriter output;
 
   @Before
   public void setUp() {
-    writer = new EventBinderWriter(logger, abstractEventType);
+    writer = new EventBinderWriter(logger, genericEventType);
     output = new StringSourceWriter();
   }
 
@@ -121,7 +121,7 @@ public class EventBinderWriterTest {
   @Test
   public void shouldFailOnInvalidParameter() throws Exception {
     JClassType paramType = mock(JClassType.class);
-    when(paramType.isAssignableTo(abstractEventType)).thenReturn(false);
+    when(paramType.isAssignableTo(genericEventType)).thenReturn(false);
     when(paramType.isClassOrInterface()).thenReturn(paramType);
 
     JMethod method = newMethod("myMethod", paramType);
@@ -181,7 +181,7 @@ public class EventBinderWriterTest {
   private JClassType newEventType(String name) {
     JClassType type = mock(JClassType.class);
     when(type.isClassOrInterface()).thenReturn(type);
-    when(type.isAssignableTo(abstractEventType)).thenReturn(true);
+    when(type.isAssignableTo(genericEventType)).thenReturn(true);
     when(type.getQualifiedSourceName()).thenReturn(name);
     return type;
   }

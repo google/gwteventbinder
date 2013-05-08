@@ -24,7 +24,7 @@ import java.lang.annotation.Target;
 /**
  * Annotation for a method that handles events sent through an {@link EventBus}.
  * The method must have one parameter, which is usually a subclass of
- * {@link AbstractEvent}. The method will start receiving events after it is
+ * {@link GenericEvent}. The method will start receiving events after it is
  * connected to the EventBus using an {@link EventBinder}. Only the parameter of
  * the method is relevant; the name is ignored. For example, the given method
  * will be invoked whenever a ProfileLoadedEvent is fired on the event bus to

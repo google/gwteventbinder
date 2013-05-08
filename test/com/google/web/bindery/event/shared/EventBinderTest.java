@@ -108,6 +108,6 @@ public class EventBinderTest extends GWTTestCase {
     }
   }
 
-  static class FirstEvent extends AbstractEvent<FirstEvent> {}
-  static class SecondEvent extends AbstractEvent<SecondEvent> {}
+  static class FirstEvent extends GenericEvent<FirstEvent> {}
+  static class SecondEvent extends GenericEvent<SecondEvent> {}
 }

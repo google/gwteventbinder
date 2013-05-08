@@ -35,11 +35,11 @@ import com.google.web.bindery.event.shared.EventHandler;
 class EventBinderWriter {
 
   private TreeLogger logger;
-  private JClassType abstractEventType;
+  private JClassType genericEventType;
 
-  EventBinderWriter(TreeLogger logger, JClassType abstractEventType) {
+  EventBinderWriter(TreeLogger logger, JClassType genericEventType) {
     this.logger = logger;
-    this.abstractEventType = abstractEventType;
+    this.genericEventType = genericEventType;
   }
 
   void writeDoBindEventHandlers(JClassType target, SourceWriter writer)
@@ -67,10 +67,10 @@ class EventBinderWriter {
     if (method.getParameterTypes().length != 1
         || method.getParameterTypes()[0].isClassOrInterface() == null
         || method.getParameterTypes()[0].isClassOrInterface().isAbstract()
-        || !method.getParameterTypes()[0].isClassOrInterface().isAssignableTo(abstractEventType)) {
+        || !method.getParameterTypes()[0].isClassOrInterface().isAssignableTo(genericEventType)) {
       logger.log(Type.ERROR, "Method " + method.getName()
           + " annotated with @EventHandler must have exactly one argument of a concrete type "
-          + "assignable to AbstractEvent");
+          + "assignable to GenericEvent");
       throw new UnableToCompleteException();
     }
     String eventType = method.getParameterTypes()[0].getQualifiedSourceName();

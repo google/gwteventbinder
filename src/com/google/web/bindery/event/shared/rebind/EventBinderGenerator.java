@@ -27,7 +27,7 @@ import com.google.gwt.core.ext.typeinfo.NotFoundException;
 import com.google.gwt.core.ext.typeinfo.TypeOracle;
 import com.google.gwt.user.rebind.ClassSourceFileComposerFactory;
 import com.google.gwt.user.rebind.SourceWriter;
-import com.google.web.bindery.event.shared.AbstractEvent;
+import com.google.web.bindery.event.shared.GenericEvent;
 import com.google.web.bindery.event.shared.AbstractEventBinder;
 import com.google.web.bindery.event.shared.EventBinder;
 import com.google.web.bindery.event.shared.EventBus;
@@ -57,7 +57,7 @@ public class EventBinderGenerator extends Generator {
       if (writer != null) { // Otherwise the class was already created
         new EventBinderWriter(
             logger,
-            context.getTypeOracle().getType(AbstractEvent.class.getCanonicalName()))
+            context.getTypeOracle().getType(GenericEvent.class.getCanonicalName()))
                 .writeDoBindEventHandlers(targetType, writer);
         writer.commit(logger);
       }
@@ -92,9 +92,9 @@ public class EventBinderGenerator extends Generator {
         + "<" + targetType.getName() + ">");
     composer.addImplementedInterface(eventBinderType.getName());
 
-    composer.addImport(AbstractEvent.class.getCanonicalName());
     composer.addImport(EventBinder.class.getCanonicalName());
     composer.addImport(EventBus.class.getCanonicalName());
+    composer.addImport(GenericEvent.class.getCanonicalName());
     composer.addImport(GenericEventHandler.class.getCanonicalName());
     composer.addImport(HandlerRegistration.class.getCanonicalName());
     composer.addImport(LinkedList.class.getCanonicalName());

@@ -51,7 +51,7 @@ public abstract class AbstractEventBinder<T> implements EventBinder<T> {
    * into a method here instead of generated directly in order to simplify the generated code and
    * save a little space.
    */
-  protected final <U extends AbstractEvent<U>> void bind(
+  protected final <U extends GenericEvent<U>> void bind(
       EventBus eventBus,
       List<HandlerRegistration> registrations,
       Class<U> type,
