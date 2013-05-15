@@ -85,12 +85,13 @@ Alternatively, you can check out the source using git from
 
 ## Where can I learn more?
 
- * For more details on the EventBinder API, consult the [Javadoc][1].
- * Check out the [sample app][2] for a full example of using EventBinder.
- * For general advice on architecting GWT applications, see [this video][3]
-   and [this document][4]
+ * For more details on the EventBinder API, consult the [Javadoc][2].
+ * Check out the [sample app][3] for a full example of using EventBinder.
+ * For general advice on architecting GWT applications, see [this video][4]
+   and [this document][5]
 
 [1]: TODO
-[2]: TODO
-[3]: http://www.youtube.com/watch?v=PDuhR18-EdM
-[4]: https://developers.google.com/web-toolkit/articles/mvp-architecture
+[2]: http://google.github.io/gwteventbinder/javadoc/
+[3]: https://github.com/google/gwteventbinder/tree/master/sample/src/client
+[4]: http://www.youtube.com/watch?v=PDuhR18-EdM
+[5]: https://developers.google.com/web-toolkit/articles/mvp-architecture
