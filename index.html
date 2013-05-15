@@ -1,0 +1,148 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>EventBinder by google</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1 class="header">EventBinder</h1>
+        <p class="header">Making EventBus easy</p>
+
+        <ul>
+          <li class="download"><a class="buttons" href="https://github.com/google/gwteventbinder/zipball/master">Download ZIP</a></li>
+          <li class="download"><a class="buttons" href="https://github.com/google/gwteventbinder/tarball/master">Download TAR</a></li>
+          <li><a class="buttons github" href="https://github.com/google/gwteventbinder">View On GitHub</a></li>
+        </ul>
+
+        <p class="header">This project is maintained by <a class="header name" href="https://github.com/google">google</a></p>
+
+
+      </header>
+      <section>
+        <h2>What is EventBinder?</h2>
+
+<p>GWT's EventBus is great - it allows you to write maintainable GWT applications
+by decoupling the components of your application, making them easy to add,
+modify, or remove. However, using EventBus in GWT can require a lot of 
+boilerplate in the form of implementing events, defining handler interfaces for
+them, and implementing those interfaces all over your code in anonymous classes.
+EventBinder automates away these boring details using a strategy similar to the
+<code>@UiHandler</code> annotation defined by UiBinder.</p>
+
+<h2>How do I use it?</h2>
+
+<p>Easy - just define your event, register handler methods for it, and then fire 
+it.</p>
+
+<h3>Defining events</h3>
+
+<p>With EventBinder, events are just immutable value types extending 
+<code>GenericEvent</code>. If your event doesn't have any arguments, defining it
+only takes one line:</p>
+
+<pre><code>public class SaveClickedEvent extends GenericEvent {}
+</code></pre>
+
+<p>To create an event with arguments, just create a normal Java value type:</p>
+
+<pre><code>public class EmailLoadedEvent extends GenericEvent {
+  private final String subject;
+  private final String body;
+
+  public EmailLoadedEvent(String subject, String body) {
+    this.subject = subject;
+    this.body = body;
+  }
+
+  public String getSubject() { return subject; }
+  public String getBody() { return body; }
+}
+</code></pre>
+
+<p>That's it - no need to implement <code>getAssociatedType</code> or <code>dispatch</code> from
+<code>GwtEvent</code> or to define handler interfaces.</p>
+
+<h3>Registering event handlers</h3>
+
+<p>Event handlers are methods annotated with the <code>@EventHandler</code> annotation. It
+works the same way as <code>@UiHandler</code> - the name of the method is ignored, and
+the argument to the method is checked to determine what type of event to
+handle. In order to get this to work, you must also define an <code>EventBinder</code> 
+interface and invoke <code>bindEventHandlers</code> on it in the same way you would for a 
+<code>UiBinder</code>. Here's an example:</p>
+
+<pre><code>class EmailPresenter {
+  interface MyEventBinder extends EventBinder&lt;EmailPresenter&gt; {}
+  private final MyEventBinder eventBinder = GWT.create(MyEventBinder.class);
+
+  EmailPresenter(EventBus eventBus) {
+    eventBinder.bindEventHandlers(this, eventBus);
+  }
+
+  @EventHandler
+  void onEmailLoaded(EmailLoadedEvent event) {
+    view.setSubject(email.getSubject());
+    view.setBody(email.getBody());
+  }
+}
+</code></pre>
+
+<p>After <code>bindEventHandlers</code> is called, <code>onEmailLoaded</code> will be invoked whenever an
+<code>EmailLoadedEvent</code> is fired on the given event bus.</p>
+
+<h3>Firing events</h3>
+
+<p>The last step is easy and doesn't require anything special from EventBinder -
+just construct an event and fire it on the event bus:</p>
+
+<pre><code>eventBus.fireEvent(new EmailLoadedEvent("Hello world!", "How are you?"));
+</code></pre>
+
+<p>Firing this event will cause all <code>@EventHandler</code>s for <code>EmailLoadedEvent</code> in the
+application to be invoked in an undefined order. That's it, you're done!</p>
+
+<h2>How do I install it?</h2>
+
+<p>Just download the <a href="TODO">jar</a> and include it in your GWT application. 
+Alternatively, you can check out the source using git from
+<a href="https://github.com/google/gwteventbinder.git">https://github.com/google/gwteventbinder.git</a> and build it yourself.</p>
+
+<h2>Where can I learn more?</h2>
+
+<ul>
+<li>For more details on the EventBinder API, consult the <a href="TODO">Javadoc</a>.</li>
+<li>Check out the <a href="TODO">sample app</a> for a full example of using EventBinder.</li>
+<li>For general advice on architecting GWT applications, see <a href="http://www.youtube.com/watch?v=PDuhR18-EdM">this video</a>
+and <a href="https://developers.google.com/web-toolkit/articles/mvp-architecture">this document</a>
+</li>
+</ul>
+      </section>
+      <footer>
+        <p><small>Hosted on <a href="https://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
+      </footer>
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+		          <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-40907096-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>
