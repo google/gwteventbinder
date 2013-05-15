@@ -79,10 +79,10 @@ application to be invoked in an undefined order. That's it, you're done!
 
 ## How do I install it?
 
-Just download the [jar][1] and include it in your GWT application. 
-Alternatively, you can check out the source using git from
-<https://github.com/google/eventbinder.git> and build it yourself. Be sure to
-inherit the module in your .gwt.xml file like this:
+A Maven repository will be available soon. For now, just download the [jar][1]
+and include it in your GWT application. Alternatively, you can check out the
+source using git from <https://github.com/google/eventbinder.git> and build it
+yourself. Be sure to inherit the module in your .gwt.xml file like this:
 
     <inherits name='com.google.web.bindery.event.EventBinder'/>
 
@@ -93,7 +93,7 @@ inherit the module in your .gwt.xml file like this:
  * For general advice on architecting GWT applications, see [this video][4]
    and [this document][5]
 
-[1]: TODO
+[1]: https://github.com/google/gwteventbinder/wiki/jars/eventbinder-1.0.0.jar
 [2]: http://google.github.io/gwteventbinder/javadoc/
 [3]: https://github.com/google/gwteventbinder/tree/master/sample/src/sample/client
 [4]: http://www.youtube.com/watch?v=PDuhR18-EdM
