@@ -81,7 +81,10 @@ application to be invoked in an undefined order. That's it, you're done!
 
 Just download the [jar][1] and include it in your GWT application. 
 Alternatively, you can check out the source using git from
-<https://github.com/google/eventbinder.git> and build it yourself.
+<https://github.com/google/eventbinder.git> and build it yourself. Be sure to
+inherit the module in your .gwt.xml file like this:
+
+    <inherits name='com.google.web.bindery.event.EventBinder'/>
 
 ## Where can I learn more?
 
@@ -92,6 +95,6 @@ Alternatively, you can check out the source using git from
 
 [1]: TODO
 [2]: http://google.github.io/gwteventbinder/javadoc/
-[3]: https://github.com/google/gwteventbinder/tree/master/sample/src/client
+[3]: https://github.com/google/gwteventbinder/tree/master/sample/src/sample/client
 [4]: http://www.youtube.com/watch?v=PDuhR18-EdM
 [5]: https://developers.google.com/web-toolkit/articles/mvp-architecture
