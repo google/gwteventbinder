@@ -114,15 +114,19 @@ application to be invoked in an undefined order. That's it, you're done!</p>
 
 <h2>How do I install it?</h2>
 
-<p>Just download the <a href="TODO">jar</a> and include it in your GWT application. 
-Alternatively, you can check out the source using git from
-<a href="https://github.com/google/gwteventbinder.git">https://github.com/google/gwteventbinder.git</a> and build it yourself.</p>
+<p>A Maven repository will be available soon. For now, just download the <a href="https://github.com/google/gwteventbinder/wiki/jars/eventbinder-1.0.0.jar">jar</a>
+and include it in your GWT application. Alternatively, you can check out the
+source using git from <a href="https://github.com/google/eventbinder.git">https://github.com/google/eventbinder.git</a> and build it
+yourself. Be sure to inherit the module in your .gwt.xml file like this:</p>
+
+<pre><code>&lt;inherits name='com.google.web.bindery.event.EventBinder'/&gt;
+</code></pre>
 
 <h2>Where can I learn more?</h2>
 
 <ul>
-<li>For more details on the EventBinder API, consult the <a href="javadoc">Javadoc</a>.</li>
-<li>Check out the <a href="TODO">sample app</a> for a full example of using EventBinder.</li>
+<li>For more details on the EventBinder API, consult the <a href="http://google.github.io/gwteventbinder/javadoc/">Javadoc</a>.</li>
+<li>Check out the <a href="https://github.com/google/gwteventbinder/tree/master/sample/src/sample/client">sample app</a> for a full example of using EventBinder.</li>
 <li>For general advice on architecting GWT applications, see <a href="http://www.youtube.com/watch?v=PDuhR18-EdM">this video</a>
 and <a href="https://developers.google.com/web-toolkit/articles/mvp-architecture">this document</a>
 </li>
