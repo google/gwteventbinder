@@ -51,24 +51,24 @@ it.</p>
 <code>GenericEvent</code>. If your event doesn't have any arguments, defining it
 only takes one line:</p>
 
-<pre><code>public class SaveClickedEvent extends GenericEvent {}
-</code></pre>
+<div class="highlight"><pre><span class="kd">public</span> <span class="kd">class</span> <span class="nc">SaveClickedEvent</span> <span class="kd">extends</span> <span class="n">GenericEvent</span> <span class="o">{}</span>
+</pre></div>
 
 <p>To create an event with arguments, just create a normal Java value type:</p>
 
-<pre><code>public class EmailLoadedEvent extends GenericEvent {
-  private final String subject;
-  private final String body;
+<div class="highlight"><pre><span class="kd">public</span> <span class="kd">class</span> <span class="nc">EmailLoadedEvent</span> <span class="kd">extends</span> <span class="n">GenericEvent</span> <span class="o">{</span>
+  <span class="kd">private</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">subject</span><span class="o">;</span>
+  <span class="kd">private</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">body</span><span class="o">;</span>
 
-  public EmailLoadedEvent(String subject, String body) {
-    this.subject = subject;
-    this.body = body;
-  }
+  <span class="kd">public</span> <span class="nf">EmailLoadedEvent</span><span class="o">(</span><span class="n">String</span> <span class="n">subject</span><span class="o">,</span> <span class="n">String</span> <span class="n">body</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">subject</span> <span class="o">=</span> <span class="n">subject</span><span class="o">;</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">body</span> <span class="o">=</span> <span class="n">body</span><span class="o">;</span>
+  <span class="o">}</span>
 
-  public String getSubject() { return subject; }
-  public String getBody() { return body; }
-}
-</code></pre>
+  <span class="kd">public</span> <span class="n">String</span> <span class="nf">getSubject</span><span class="o">()</span> <span class="o">{</span> <span class="k">return</span> <span class="n">subject</span><span class="o">;</span> <span class="o">}</span>
+  <span class="kd">public</span> <span class="n">String</span> <span class="nf">getBody</span><span class="o">()</span> <span class="o">{</span> <span class="k">return</span> <span class="n">body</span><span class="o">;</span> <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
 
 <p>That's it - no need to implement <code>getAssociatedType</code> or <code>dispatch</code> from
 <code>GwtEvent</code> or to define handler interfaces.</p>
@@ -82,21 +82,21 @@ handle. In order to get this to work, you must also define an <code>EventBinder<
 interface and invoke <code>bindEventHandlers</code> on it in the same way you would for a 
 <code>UiBinder</code>. Here's an example:</p>
 
-<pre><code>class EmailPresenter {
-  interface MyEventBinder extends EventBinder&lt;EmailPresenter&gt; {}
-  private final MyEventBinder eventBinder = GWT.create(MyEventBinder.class);
+<div class="highlight"><pre><span class="kd">class</span> <span class="nc">EmailPresenter</span> <span class="o">{</span>
+  <span class="kd">interface</span> <span class="nc">MyEventBinder</span> <span class="kd">extends</span> <span class="n">EventBinder</span><span class="o">&lt;</span><span class="n">EmailPresenter</span><span class="o">&gt;</span> <span class="o">{}</span>
+  <span class="kd">private</span> <span class="kd">final</span> <span class="n">MyEventBinder</span> <span class="n">eventBinder</span> <span class="o">=</span> <span class="n">GWT</span><span class="o">.</span><span class="na">create</span><span class="o">(</span><span class="n">MyEventBinder</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
 
-  EmailPresenter(EventBus eventBus) {
-    eventBinder.bindEventHandlers(this, eventBus);
-  }
+  <span class="n">EmailPresenter</span><span class="o">(</span><span class="n">EventBus</span> <span class="n">eventBus</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">eventBinder</span><span class="o">.</span><span class="na">bindEventHandlers</span><span class="o">(</span><span class="k">this</span><span class="o">,</span> <span class="n">eventBus</span><span class="o">);</span>
+  <span class="o">}</span>
 
-  @EventHandler
-  void onEmailLoaded(EmailLoadedEvent event) {
-    view.setSubject(email.getSubject());
-    view.setBody(email.getBody());
-  }
-}
-</code></pre>
+  <span class="nd">@EventHandler</span>
+  <span class="kt">void</span> <span class="nf">onEmailLoaded</span><span class="o">(</span><span class="n">EmailLoadedEvent</span> <span class="n">event</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">view</span><span class="o">.</span><span class="na">setSubject</span><span class="o">(</span><span class="n">email</span><span class="o">.</span><span class="na">getSubject</span><span class="o">());</span>
+    <span class="n">view</span><span class="o">.</span><span class="na">setBody</span><span class="o">(</span><span class="n">email</span><span class="o">.</span><span class="na">getBody</span><span class="o">());</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
 
 <p>After <code>bindEventHandlers</code> is called, <code>onEmailLoaded</code> will be invoked whenever an
 <code>EmailLoadedEvent</code> is fired on the given event bus.</p>
@@ -106,21 +106,21 @@ interface and invoke <code>bindEventHandlers</code> on it in the same way you wo
 <p>The last step is easy and doesn't require anything special from EventBinder -
 just construct an event and fire it on the event bus:</p>
 
-<pre><code>eventBus.fireEvent(new EmailLoadedEvent("Hello world!", "How are you?"));
-</code></pre>
+<div class="highlight"><pre><span class="n">eventBus</span><span class="o">.</span><span class="na">fireEvent</span><span class="o">(</span><span class="k">new</span> <span class="n">EmailLoadedEvent</span><span class="o">(</span><span class="s">"Hello world!"</span><span class="o">,</span> <span class="s">"How are you?"</span><span class="o">));</span>
+</pre></div>
 
 <p>Firing this event will cause all <code>@EventHandler</code>s for <code>EmailLoadedEvent</code> in the
 application to be invoked in an undefined order. That's it, you're done!</p>
 
 <h2>How do I install it?</h2>
 
-<p>A Maven repository will be available soon. For now, just download the <a href="https://github.com/google/gwteventbinder/wiki/jars/eventbinder-1.0.0.jar">jar</a>
+<p>A Maven repository will be available <a href="https://github.com/google/gwteventbinder/issues/1">soon</a>. For now, just download the <a href="https://github.com/google/gwteventbinder/wiki/jars/eventbinder-1.0.0.jar">jar</a>
 and include it in your GWT application. Alternatively, you can check out the
 source using git from <a href="https://github.com/google/eventbinder.git">https://github.com/google/eventbinder.git</a> and build it
 yourself. Be sure to inherit the module in your .gwt.xml file like this:</p>
 
-<pre><code>&lt;inherits name='com.google.web.bindery.event.EventBinder'/&gt;
-</code></pre>
+<div class="highlight"><pre>    <span class="nt">&lt;inherits</span> <span class="na">name=</span><span class="s">'com.google.web.bindery.event.EventBinder'</span><span class="nt">/&gt;</span>
+</pre></div>
 
 <h2>Where can I learn more?</h2>
 
