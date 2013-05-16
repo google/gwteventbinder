@@ -92,7 +92,9 @@ and include it in your GWT application. Alternatively, you can check out the
 source using git from <https://github.com/google/eventbinder.git> and build it
 yourself. Be sure to inherit the module in your .gwt.xml file like this:
 
+```xml
     <inherits name='com.google.web.bindery.event.EventBinder'/>
+```
 
 ## Where can I learn more?
 
