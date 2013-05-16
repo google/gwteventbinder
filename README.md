@@ -20,22 +20,26 @@ With EventBinder, events are just immutable value types extending
 `GenericEvent`. If your event doesn't have any arguments, defining it
 only takes one line:
 
-    public class SaveClickedEvent extends GenericEvent {}
+```java
+public class SaveClickedEvent extends GenericEvent {}
+```
 
 To create an event with arguments, just create a normal Java value type:
 
-    public class EmailLoadedEvent extends GenericEvent {
-      private final String subject;
-      private final String body;
+```java
+public class EmailLoadedEvent extends GenericEvent {
+  private final String subject;
+  private final String body;
 
-      public EmailLoadedEvent(String subject, String body) {
-        this.subject = subject;
-        this.body = body;
-      }
+  public EmailLoadedEvent(String subject, String body) {
+    this.subject = subject;
+    this.body = body;
+  }
 
-      public String getSubject() { return subject; }
-      public String getBody() { return body; }
-    }
+  public String getSubject() { return subject; }
+  public String getBody() { return body; }
+}
+```
 
 That's it - no need to implement `getAssociatedType` or `dispatch` from
 `GwtEvent` or to define handler interfaces.
@@ -49,20 +53,22 @@ handle. In order to get this to work, you must also define an `EventBinder`
 interface and invoke `bindEventHandlers` on it in the same way you would for a 
 `UiBinder`. Here's an example:
 
-    class EmailPresenter {
-      interface MyEventBinder extends EventBinder<EmailPresenter> {}
-      private final MyEventBinder eventBinder = GWT.create(MyEventBinder.class);
+```java
+class EmailPresenter {
+  interface MyEventBinder extends EventBinder<EmailPresenter> {}
+  private final MyEventBinder eventBinder = GWT.create(MyEventBinder.class);
 
-      EmailPresenter(EventBus eventBus) {
-        eventBinder.bindEventHandlers(this, eventBus);
-      }
+  EmailPresenter(EventBus eventBus) {
+    eventBinder.bindEventHandlers(this, eventBus);
+  }
 
-      @EventHandler
-      void onEmailLoaded(EmailLoadedEvent event) {
-        view.setSubject(email.getSubject());
-        view.setBody(email.getBody());
-      }
-    }
+  @EventHandler
+  void onEmailLoaded(EmailLoadedEvent event) {
+    view.setSubject(email.getSubject());
+    view.setBody(email.getBody());
+  }
+}
+```
 
 After `bindEventHandlers` is called, `onEmailLoaded` will be invoked whenever an
 `EmailLoadedEvent` is fired on the given event bus.
@@ -72,7 +78,9 @@ After `bindEventHandlers` is called, `onEmailLoaded` will be invoked whenever an
 The last step is easy and doesn't require anything special from EventBinder -
 just construct an event and fire it on the event bus:
 
-    eventBus.fireEvent(new EmailLoadedEvent("Hello world!", "How are you?"));
+```java
+eventBus.fireEvent(new EmailLoadedEvent("Hello world!", "How are you?"));
+```
 
 Firing this event will cause all `@EventHandler`s for `EmailLoadedEvent` in the
 application to be invoked in an undefined order. That's it, you're done!
