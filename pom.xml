@@ -13,14 +13,37 @@
   <packaging>pom</packaging>
 
   <name>EventBinder (Parent)</name>
+  <description>Making GWT EventBus easy</description>
   <url>http://google.github.io/gwteventbinder</url>
 
   <modules>
-    <module>core</module>
-    <module>sample</module>
+    <module>eventbinder</module>
+    <module>eventbinder-sample</module>
   </modules>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>3.1</version>
+          <configuration>
+            <source>1.6</source>
+            <target>1.6</target>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>net.ltgt.gwt.maven</groupId>
+          <artifactId>gwt-maven-plugin</artifactId>
+          <version>1.0-alpha-2</version>
+          <extensions>true</extensions>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
 </project>

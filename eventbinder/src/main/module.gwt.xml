@@ -15,6 +15,10 @@
 -->
 
 <module>
+  <inherits name="com.google.web.bindery.event.Event" />
+
+  <source path="shared" />
+
   <generate-with class="com.google.web.bindery.event.gwt.rebind.binder.EventBinderGenerator">
     <when-type-assignable class="com.google.web.bindery.event.shared.binder.EventBinder"/>
   </generate-with>
