@@ -87,10 +87,21 @@ application to be invoked in an undefined order. That's it, you're done!
 
 ## How do I install it?
 
-A Maven repository will be available [soon][0]. For now, just download the [jar][1]
-and include it in your GWT application. Alternatively, you can check out the
-source using git from <https://github.com/google/eventbinder.git> and build it
-yourself. Be sure to inherit the module in your .gwt.xml file like this:
+If you're using Maven, you can add the following to your `<dependencies>`
+section:
+
+```xml
+    <dependency>
+      <groupId>com.google.gwt.eventbinder</groupId>
+      <artifactId>eventbinder</artifactId>
+      <version>1.0.0</version>
+    </dependency>
+```
+
+You can also download the [jar][1] directly or check out the source using git
+from <https://github.com/google/eventbinder.git> and build it yourself. Once
+you've installed EventBinder, be sure to inherit the module in your .gwt.xml
+file like this:
 
 ```xml
     <inherits name='com.google.web.bindery.event.EventBinder'/>
@@ -104,7 +115,7 @@ yourself. Be sure to inherit the module in your .gwt.xml file like this:
    and [this document][5]
 
 [0]: https://github.com/google/gwteventbinder/issues/1
-[1]: https://github.com/google/gwteventbinder/wiki/jars/eventbinder-1.0.0.jar
+[1]: http://search.maven.org/remotecontent?filepath=com/google/gwt/eventbinder/eventbinder/1.0.0/eventbinder-1.0.0.jar
 [2]: http://google.github.io/gwteventbinder/javadoc/
 [3]: https://github.com/google/gwteventbinder/tree/master/sample/src/sample/client
 [4]: http://www.youtube.com/watch?v=PDuhR18-EdM
