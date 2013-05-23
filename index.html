@@ -114,12 +114,22 @@ application to be invoked in an undefined order. That's it, you're done!</p>
 
 <h2>How do I install it?</h2>
 
-<p>A Maven repository will be available <a href="https://github.com/google/gwteventbinder/issues/1">soon</a>. For now, just download the <a href="https://github.com/google/gwteventbinder/wiki/jars/eventbinder-1.0.0.jar">jar</a>
-and include it in your GWT application. Alternatively, you can check out the
-source using git from <a href="https://github.com/google/eventbinder.git">https://github.com/google/eventbinder.git</a> and build it
-yourself. Be sure to inherit the module in your .gwt.xml file like this:</p>
+<p>If you're using Maven, you can add the following to your <code>&lt;dependencies&gt;</code>
+section:</p>
 
-<div class="highlight"><pre>    <span class="nt">&lt;inherits</span> <span class="na">name=</span><span class="s">'com.google.web.bindery.event.EventBinder'</span><span class="nt">/&gt;</span>
+<div class="highlight"><pre><span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>com.google.gwt.eventbinder<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>eventbinder<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>1.0.0<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</pre></div>
+
+<p>You can also download the <a href="http://search.maven.org/remotecontent?filepath=com/google/gwt/eventbinder/eventbinder/1.0.0/eventbinder-1.0.0.jar">jar</a> directly or check out the source using git
+from <a href="https://github.com/google/eventbinder.git">https://github.com/google/eventbinder.git</a> and build it yourself. Once
+you've installed EventBinder, be sure to inherit the module in your .gwt.xml
+file like this:</p>
+
+<div class="highlight"><pre><span class="nt">&lt;inherits</span> <span class="na">name=</span><span class="s">'com.google.web.bindery.event.EventBinder'</span><span class="nt">/&gt;</span>
 </pre></div>
 
 <h2>Where can I learn more?</h2>
