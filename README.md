@@ -117,6 +117,6 @@ file like this:
 [0]: https://github.com/google/gwteventbinder/issues/1
 [1]: http://search.maven.org/remotecontent?filepath=com/google/gwt/eventbinder/eventbinder/1.0.0/eventbinder-1.0.0.jar
 [2]: http://google.github.io/gwteventbinder/javadoc/
-[3]: https://github.com/google/gwteventbinder/tree/master/sample/src/sample/client
+[3]: https://github.com/google/gwteventbinder/tree/master/eventbinder-sample/src/main/java/sample/client
 [4]: http://www.youtube.com/watch?v=PDuhR18-EdM
 [5]: https://developers.google.com/web-toolkit/articles/mvp-architecture
