@@ -30,7 +30,8 @@
 
       </header>
       <section>
-        <h2>What is EventBinder?</h2>
+        <h2>
+<a name="what-is-eventbinder" class="anchor" href="#what-is-eventbinder"><span class="octicon octicon-link"></span></a>What is EventBinder?</h2>
 
 <p>GWT's EventBus is great - it allows you to write maintainable GWT applications
 by decoupling the components of your application, making them easy to add,
@@ -40,12 +41,14 @@ them, and implementing those interfaces all over your code in anonymous classes.
 EventBinder automates away these boring details using a strategy similar to the
 <code>@UiHandler</code> annotation defined by UiBinder.</p>
 
-<h2>How do I use it?</h2>
+<h2>
+<a name="how-do-i-use-it" class="anchor" href="#how-do-i-use-it"><span class="octicon octicon-link"></span></a>How do I use it?</h2>
 
 <p>Easy - just define your event, register handler methods for it, and then fire 
 it.</p>
 
-<h3>Defining events</h3>
+<h3>
+<a name="defining-events" class="anchor" href="#defining-events"><span class="octicon octicon-link"></span></a>Defining events</h3>
 
 <p>With EventBinder, events are just immutable value types extending 
 <code>GenericEvent</code>. If your event doesn't have any arguments, defining it
@@ -73,7 +76,8 @@ only takes one line:</p>
 <p>That's it - no need to implement <code>getAssociatedType</code> or <code>dispatch</code> from
 <code>GwtEvent</code> or to define handler interfaces.</p>
 
-<h3>Registering event handlers</h3>
+<h3>
+<a name="registering-event-handlers" class="anchor" href="#registering-event-handlers"><span class="octicon octicon-link"></span></a>Registering event handlers</h3>
 
 <p>Event handlers are methods annotated with the <code>@EventHandler</code> annotation. It
 works the same way as <code>@UiHandler</code> - the name of the method is ignored, and
@@ -101,7 +105,8 @@ interface and invoke <code>bindEventHandlers</code> on it in the same way you wo
 <p>After <code>bindEventHandlers</code> is called, <code>onEmailLoaded</code> will be invoked whenever an
 <code>EmailLoadedEvent</code> is fired on the given event bus.</p>
 
-<h3>Firing events</h3>
+<h3>
+<a name="firing-events" class="anchor" href="#firing-events"><span class="octicon octicon-link"></span></a>Firing events</h3>
 
 <p>The last step is easy and doesn't require anything special from EventBinder -
 just construct an event and fire it on the event bus:</p>
@@ -112,16 +117,17 @@ just construct an event and fire it on the event bus:</p>
 <p>Firing this event will cause all <code>@EventHandler</code>s for <code>EmailLoadedEvent</code> in the
 application to be invoked in an undefined order. That's it, you're done!</p>
 
-<h2>How do I install it?</h2>
+<h2>
+<a name="how-do-i-install-it" class="anchor" href="#how-do-i-install-it"><span class="octicon octicon-link"></span></a>How do I install it?</h2>
 
 <p>If you're using Maven, you can add the following to your <code>&lt;dependencies&gt;</code>
 section:</p>
 
-<div class="highlight"><pre><span class="nt">&lt;dependency&gt;</span>
-  <span class="nt">&lt;groupId&gt;</span>com.google.gwt.eventbinder<span class="nt">&lt;/groupId&gt;</span>
-  <span class="nt">&lt;artifactId&gt;</span>eventbinder<span class="nt">&lt;/artifactId&gt;</span>
-  <span class="nt">&lt;version&gt;</span>1.0.0<span class="nt">&lt;/version&gt;</span>
-<span class="nt">&lt;/dependency&gt;</span>
+<div class="highlight"><pre>    <span class="nt">&lt;dependency&gt;</span>
+      <span class="nt">&lt;groupId&gt;</span>com.google.gwt.eventbinder<span class="nt">&lt;/groupId&gt;</span>
+      <span class="nt">&lt;artifactId&gt;</span>eventbinder<span class="nt">&lt;/artifactId&gt;</span>
+      <span class="nt">&lt;version&gt;</span>1.0.0<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;/dependency&gt;</span>
 </pre></div>
 
 <p>You can also download the <a href="http://search.maven.org/remotecontent?filepath=com/google/gwt/eventbinder/eventbinder/1.0.0/eventbinder-1.0.0.jar">jar</a> directly or check out the source using git
@@ -129,14 +135,15 @@ from <a href="https://github.com/google/eventbinder.git">https://github.com/goog
 you've installed EventBinder, be sure to inherit the module in your .gwt.xml
 file like this:</p>
 
-<div class="highlight"><pre><span class="nt">&lt;inherits</span> <span class="na">name=</span><span class="s">'com.google.web.bindery.event.EventBinder'</span><span class="nt">/&gt;</span>
+<div class="highlight"><pre>    <span class="nt">&lt;inherits</span> <span class="na">name=</span><span class="s">'com.google.web.bindery.event.EventBinder'</span><span class="nt">/&gt;</span>
 </pre></div>
 
-<h2>Where can I learn more?</h2>
+<h2>
+<a name="where-can-i-learn-more" class="anchor" href="#where-can-i-learn-more"><span class="octicon octicon-link"></span></a>Where can I learn more?</h2>
 
 <ul>
 <li>For more details on the EventBinder API, consult the <a href="http://google.github.io/gwteventbinder/javadoc/">Javadoc</a>.</li>
-<li>Check out the <a href="https://github.com/google/gwteventbinder/tree/master/sample/src/sample/client">sample app</a> for a full example of using EventBinder.</li>
+<li>Check out the <a href="https://github.com/google/gwteventbinder/tree/master/eventbinder-sample/src/main/java/sample/client">sample app</a> for a full example of using EventBinder.</li>
 <li>For general advice on architecting GWT applications, see <a href="http://www.youtube.com/watch?v=PDuhR18-EdM">this video</a>
 and <a href="https://developers.google.com/web-toolkit/articles/mvp-architecture">this document</a>
 </li>
