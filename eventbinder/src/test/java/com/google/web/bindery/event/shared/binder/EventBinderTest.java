@@ -15,13 +15,11 @@
  */
 package com.google.web.bindery.event.shared.binder;
 
-import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.shared.GWT;
 import com.google.gwt.junit.client.GWTTestCase;
 import com.google.web.bindery.event.shared.EventBus;
 import com.google.web.bindery.event.shared.HandlerRegistration;
 import com.google.web.bindery.event.shared.SimpleEventBus;
-import com.google.web.bindery.event.shared.binder.EventBinder;
-import com.google.web.bindery.event.shared.binder.GenericEvent;
 
 /**
  * End-to-end test of {@link EventBinder} and associated classes.
@@ -37,7 +35,9 @@ public class EventBinderTest extends GWTTestCase {
 
   public void testEventBinder() {
     EventBus eventBus = new SimpleEventBus();
-    TestPresenter presenter = new TestPresenter(eventBus);
+    TestPresenter presenter = new TestPresenter();
+    TestPresenter.MyEventBinder binder = GWT.create(TestPresenter.MyEventBinder.class);
+    binder.bindEventHandlers(presenter, eventBus);
 
     // Test one event
     assertEquals(0, presenter.firstEventsHandled);
@@ -53,7 +53,9 @@ public class EventBinderTest extends GWTTestCase {
 
   public void testEventBinder_unbindEventHandlers() {
     EventBus eventBus = new SimpleEventBus();
-    TestPresenter presenter = new TestPresenter(eventBus);
+    TestPresenter presenter = new TestPresenter();
+    TestPresenter.MyEventBinder binder = GWT.create(TestPresenter.MyEventBinder.class);
+    HandlerRegistration registration = binder.bindEventHandlers(presenter, eventBus);
     assertEquals(0, presenter.firstEventsHandled);
     assertEquals(0, presenter.secondEventsHandled);
 
@@ -64,14 +66,14 @@ public class EventBinderTest extends GWTTestCase {
     assertEquals(1, presenter.secondEventsHandled);
 
     // After unregistering
-    presenter.handlerRegistration.removeHandler();
+    registration.removeHandler();
     eventBus.fireEvent(new FirstEvent());
     eventBus.fireEvent(new SecondEvent());
     assertEquals(1, presenter.firstEventsHandled);
     assertEquals(1, presenter.secondEventsHandled);
 
     // After re-registering
-    presenter.eventBinder.bindEventHandlers(presenter, eventBus);
+    binder.bindEventHandlers(presenter, eventBus);
     eventBus.fireEvent(new FirstEvent());
     eventBus.fireEvent(new SecondEvent());
     assertEquals(2, presenter.firstEventsHandled);
@@ -81,26 +83,44 @@ public class EventBinderTest extends GWTTestCase {
   public void testEventBinder_withLegacyEventBus() {
     com.google.gwt.event.shared.EventBus eventBus =
         new com.google.gwt.event.shared.SimpleEventBus();
-    TestPresenter presenter = new TestPresenter(eventBus);
+    TestPresenter presenter = new TestPresenter();
+    TestPresenter.MyEventBinder binder = GWT.create(TestPresenter.MyEventBinder.class);
+    binder.bindEventHandlers(presenter, eventBus);
 
     assertEquals(0, presenter.firstEventsHandled);
     eventBus.fireEvent(new FirstEvent());
     assertEquals(1, presenter.firstEventsHandled);
   }
 
-  interface MyEventBinder extends EventBinder<TestPresenter> {}
+  public void testEventBinder_withHandlersInSuperclass() {
+    EventBus eventBus = new SimpleEventBus();
+    SubPresenter presenter = new SubPresenter();
+    SubPresenter.MyEventBinder binder = GWT.create(SubPresenter.MyEventBinder.class);
+    binder.bindEventHandlers(presenter, eventBus);
+
+    eventBus.fireEvent(new FirstEvent());
+    eventBus.fireEvent(new SecondEvent());
+    eventBus.fireEvent(new ThirdEvent());
+
+    // FirstEvent has a handler in both classes, so it should be handled twice
+    assertEquals(1, presenter.firstEventsHandled);
+    assertEquals(1, presenter.subclassFirstEventsHandled);
+
+    // SecondEvent's handler is overridden in the subclass, so it should only be handled there
+    assertEquals(0, presenter.secondEventsHandled);
+    assertEquals(1, presenter.subclassSecondEventsHandled);
+
+    // ThirdEvent is only handled in the superclass
+    assertEquals(1, presenter.thirdEventsHandled);
+  }
+
 
   static class TestPresenter {
-    private final MyEventBinder eventBinder = GWT.create(MyEventBinder.class);
+    interface MyEventBinder extends EventBinder<TestPresenter> {}
 
-    private final HandlerRegistration handlerRegistration;
-
-    private int firstEventsHandled;
-    private int secondEventsHandled;
-
-    public TestPresenter(EventBus eventBus) {
-      handlerRegistration = eventBinder.bindEventHandlers(this, eventBus);
-    }
+    int firstEventsHandled;
+    int secondEventsHandled;
+    int thirdEventsHandled;
 
     @EventHandler
     void onFirstEvent(FirstEvent e) {
@@ -111,8 +131,32 @@ public class EventBinderTest extends GWTTestCase {
     void onSecondEvent(SecondEvent e) {
       secondEventsHandled++;
     }
+
+    @EventHandler
+    void onThirdEvent(ThirdEvent e) {
+      thirdEventsHandled++;
+    }
+  }
+
+  static class SubPresenter extends TestPresenter {
+    interface MyEventBinder extends EventBinder<SubPresenter> {}
+
+    int subclassFirstEventsHandled;
+    int subclassSecondEventsHandled;
+
+    @EventHandler
+    void onFirstEventAgain(FirstEvent e) {
+      subclassFirstEventsHandled++;
+    }
+
+    @Override
+    @EventHandler
+    void onSecondEvent(SecondEvent e) {
+      subclassSecondEventsHandled++;
+    }
   }
 
   static class FirstEvent extends GenericEvent {}
   static class SecondEvent extends GenericEvent {}
+  static class ThirdEvent extends GenericEvent {}
 }
