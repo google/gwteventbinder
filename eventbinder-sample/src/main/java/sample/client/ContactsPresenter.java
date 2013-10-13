@@ -19,6 +19,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.Label;
+import com.google.web.bindery.event.shared.HandlerRegistration;
 import com.google.web.bindery.event.shared.binder.EventBinder;
 import com.google.web.bindery.event.shared.binder.EventHandler;
 
@@ -31,10 +32,30 @@ class ContactsPresenter {
   interface MyEventBinder extends EventBinder<ContactsPresenter> {}
   private static final MyEventBinder eventBinder = GWT.create(MyEventBinder.class);
 
+  private final EventBus eventBus;
   private HasWidgets view;
+  private HandlerRegistration eventRegistration;
 
   ContactsPresenter(EventBus eventBus) {
-    eventBinder.bindEventHandlers(this, eventBus);
+    this.eventBus = eventBus;
+  }
+
+  /**
+   * Causes this presenter to start listening for events on the event bus. This method should be
+   * called when this presenter becomes the active presenter.
+   */
+  void start() {
+    // It's also possible to bind handlers in the constructor. This is useful for presenters that
+    // should always be listening for events.
+    eventRegistration = eventBinder.bindEventHandlers(this, eventBus);
+  }
+
+  /**
+   * Causes this presenter to stop listening for the events on the event bus. This method should be
+   * called when this presenter is no longer active.
+   */
+  void stop() {
+    eventRegistration.removeHandler();
   }
 
   void setView(HasWidgets view) {

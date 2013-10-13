@@ -46,6 +46,9 @@ public class SampleEntryPoint implements EntryPoint {
     contactsPresenter.setView(contactsView);
     RootPanel.get().add(contactsView);
 
+    // Start listening for events in the presenter
+    contactsPresenter.start();
+
     // Eagerly bind the server proxy
     ServerProxy server = new ServerProxy(eventBus);
   }
