@@ -20,14 +20,8 @@ import com.google.gwt.core.ext.TreeLogger.Type;
 import com.google.gwt.core.ext.UnableToCompleteException;
 import com.google.gwt.core.ext.typeinfo.JClassType;
 import com.google.gwt.core.ext.typeinfo.JMethod;
-import com.google.gwt.core.ext.typeinfo.JType;
 import com.google.gwt.user.rebind.SourceWriter;
 import com.google.web.bindery.event.shared.binder.EventHandler;
-
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
 
 /**
  * Writes implementations of
@@ -51,23 +45,11 @@ class EventBinderWriter {
   void writeDoBindEventHandlers(JClassType target, SourceWriter writer)
       throws UnableToCompleteException {
     writeBindMethodHeader(writer, target.getQualifiedSourceName());
-
-    // Keep track of the methods we've written handlers for so that we don't write them multiple
-    // times when traversing superclasses with overridden methods.
-    Set<MethodSignature> signaturesWritten = new HashSet<MethodSignature>();
-
-    // Step through the class and its ancestors, writing a handler for each new method encountered
-    JClassType clazz = target;
-    do {
-      for (JMethod method : clazz.getMethods()) {
-        MethodSignature sig = new MethodSignature(method);
-        if (method.getAnnotation(EventHandler.class) != null && !signaturesWritten.contains(sig)) {
-          writeHandlerForBindMethod(writer, method);
-          signaturesWritten.add(sig);
-        }
+    for (JMethod method : target.getInheritableMethods()) {
+      if (method.getAnnotation(EventHandler.class) != null) {
+        writeHandlerForBindMethod(writer, method);
       }
-    } while ((clazz = clazz.getSuperclass()) != null);
-
+    }
     writeBindMethodFooter(writer);
   }
 
@@ -103,33 +85,5 @@ class EventBinderWriter {
     writer.println("return registrations;");
     writer.outdent();
     writer.println("}");
-  }
-
-  /** Holds a method's name and parameter type, allowing them to be compared to check duplicates. */
-  private static class MethodSignature {
-    final String name;
-    final List<String> params;
-
-    MethodSignature(JMethod method) {
-      name = method.getName();
-      params = new LinkedList<String>();
-      for (JType paramType : method.getParameterTypes()) {
-        params.add(paramType.getQualifiedSourceName());
-      }
-    }
-
-    @Override
-    public int hashCode() {
-      return name.hashCode();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-      if (!(obj instanceof MethodSignature)) {
-        return false;
-      }
-      MethodSignature other = (MethodSignature) obj;
-      return name.equals(other.name) && params.equals(other.params);
-    }
   }
 }

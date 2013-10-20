@@ -33,7 +33,6 @@ import com.google.gwt.core.ext.typeinfo.JMethod;
 import com.google.gwt.core.ext.typeinfo.JType;
 import com.google.gwt.user.rebind.SourceWriter;
 import com.google.gwt.user.rebind.StringSourceWriter;
-import com.google.web.bindery.event.gwt.rebind.binder.EventBinderWriter;
 import com.google.web.bindery.event.shared.binder.EventHandler;
 
 import org.junit.Before;
@@ -72,7 +71,7 @@ public class EventBinderWriterTest {
     JMethod method2 = newMethod("method2", eventType2);
 
     when(target.getQualifiedSourceName()).thenReturn("MyTarget");
-    when(target.getMethods()).thenReturn(new JMethod[] {method1, method2});
+    when(target.getInheritableMethods()).thenReturn(new JMethod[] {method1, method2});
 
     writer.writeDoBindEventHandlers(target, output);
 
@@ -93,7 +92,7 @@ public class EventBinderWriterTest {
   @Test
   public void shouldFailOnZeroParameters() throws Exception {
     JMethod method = newMethod("myMethod");
-    when(target.getMethods()).thenReturn(new JMethod[] {method});
+    when(target.getInheritableMethods()).thenReturn(new JMethod[] {method});
 
     try {
       writer.writeDoBindEventHandlers(target, output);
@@ -107,7 +106,7 @@ public class EventBinderWriterTest {
   @Test
   public void shouldFailOnTwoParameters() throws Exception {
     JMethod method = newMethod("myMethod", mock(JType.class), mock(JType.class));
-    when(target.getMethods()).thenReturn(new JMethod[] {method});
+    when(target.getInheritableMethods()).thenReturn(new JMethod[] {method});
 
     try {
       writer.writeDoBindEventHandlers(target, output);
@@ -125,7 +124,7 @@ public class EventBinderWriterTest {
     when(paramType.isClassOrInterface()).thenReturn(paramType);
 
     JMethod method = newMethod("myMethod", paramType);
-    when(target.getMethods()).thenReturn(new JMethod[] {method});
+    when(target.getInheritableMethods()).thenReturn(new JMethod[] {method});
 
     try {
       writer.writeDoBindEventHandlers(target, output);
@@ -142,7 +141,7 @@ public class EventBinderWriterTest {
     when(paramType.isClassOrInterface()).thenReturn(null);
 
     JMethod method = newMethod("myMethod", paramType);
-    when(target.getMethods()).thenReturn(new JMethod[] {method});
+    when(target.getInheritableMethods()).thenReturn(new JMethod[] {method});
 
     try {
       writer.writeDoBindEventHandlers(target, output);
@@ -159,7 +158,7 @@ public class EventBinderWriterTest {
     when(paramType.isAbstract()).thenReturn(true);
     
     JMethod method = newMethod("myMethod", paramType);
-    when(target.getMethods()).thenReturn(new JMethod[] {method});
+    when(target.getInheritableMethods()).thenReturn(new JMethod[] {method});
     
     try {
       writer.writeDoBindEventHandlers(target, output);
