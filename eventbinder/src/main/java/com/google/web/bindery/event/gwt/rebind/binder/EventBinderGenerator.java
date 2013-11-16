@@ -15,8 +15,6 @@
  */
 package com.google.web.bindery.event.gwt.rebind.binder;
 
-import static com.google.gwt.dev.util.Preconditions.checkArgument;
-
 import com.google.gwt.core.ext.Generator;
 import com.google.gwt.core.ext.GeneratorContext;
 import com.google.gwt.core.ext.TreeLogger;
@@ -70,11 +68,13 @@ public class EventBinderGenerator extends Generator {
 
   private JClassType getTargetType(JClassType interfaceType, TypeOracle typeOracle) {
     JClassType[] superTypes = interfaceType.getImplementedInterfaces();
-    checkArgument(
-        superTypes.length == 1
-        && superTypes[0].isAssignableFrom(typeOracle.findType(EventBinder.class.getCanonicalName()))
-        && superTypes[0].isParameterized() != null,
-        interfaceType + " must extend EventBinder with a type parameter");
+    JClassType eventBinderType = typeOracle.findType(EventBinder.class.getCanonicalName());
+    if (superTypes.length != 1
+        || !superTypes[0].isAssignableFrom(eventBinderType)
+        || superTypes[0].isParameterized() == null) {
+      throw new IllegalArgumentException(
+          interfaceType + " must extend EventBinder with a type parameter");
+    }
     return superTypes[0].isParameterized().getTypeArgs()[0];
   }
 
