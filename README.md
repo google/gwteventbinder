@@ -94,7 +94,7 @@ section:
     <dependency>
       <groupId>com.google.gwt.eventbinder</groupId>
       <artifactId>eventbinder</artifactId>
-      <version>1.0.1</version>
+      <version>1.0.2</version>
     </dependency>
 ```
 
@@ -116,15 +116,18 @@ file like this:
 
 ## Version history
 
+### 1.0.2
+ * Compatibility with GWT 2.6 (thanks to @tbroyer).
+
 ### 1.0.1
- * Compatibility with GWT 2.6.
+ * Preliminary compatibility with GWT 2.6.
  * EventBinder now searches for `@EventHandler` annotation in superclasses as well as the current class.
 
 ### 1.0.0
  * Initial release.
 
 [0]: https://github.com/google/gwteventbinder/issues/1
-[1]: http://search.maven.org/remotecontent?filepath=com/google/gwt/eventbinder/eventbinder/1.0.1/eventbinder-1.0.1.jar
+[1]: http://search.maven.org/remotecontent?filepath=com/google/gwt/eventbinder/eventbinder/1.0.2/eventbinder-1.0.2.jar
 [2]: http://google.github.io/gwteventbinder/javadoc/
 [3]: https://github.com/google/gwteventbinder/tree/master/eventbinder-sample/src/main/java/sample/client
 [4]: http://www.youtube.com/watch?v=PDuhR18-EdM
