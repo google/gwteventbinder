@@ -41,7 +41,7 @@ public class GenericEventType extends Type<GenericEventHandler> {
    * called directly by users.
    */
   public static <T extends GenericEvent> GenericEventType getTypeOf(Class<T> clazz) {
-    if (!TYPE_MAP.containsKey(clazz)) {
+    if (TYPE_MAP.get(clazz)==null) {
       TYPE_MAP.put(clazz, new GenericEventType());
     }
     return TYPE_MAP.get(clazz);
