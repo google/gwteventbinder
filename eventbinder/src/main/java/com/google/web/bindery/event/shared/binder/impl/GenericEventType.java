@@ -44,8 +44,8 @@ public class GenericEventType extends Type<GenericEventHandler> {
     
     GenericEventType eventType = TYPE_MAP.get(clazz);
     
-    if (eventType==null) {
-      eventType =  new GenericEventType();
+    if (eventType == null) {
+      eventType = new GenericEventType();
       TYPE_MAP.put(clazz, eventType);
     }
     
