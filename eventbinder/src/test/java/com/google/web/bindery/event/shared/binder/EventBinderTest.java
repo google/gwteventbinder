@@ -43,12 +43,15 @@ public class EventBinderTest extends GWTTestCase {
     assertEquals(0, presenter.firstEventsHandled);
     eventBus.fireEvent(new FirstEvent());
     assertEquals(1, presenter.firstEventsHandled);
+    assertEquals(1, presenter.firstEventsWithoutParameterHandled);
+    assertEquals(1, presenter.firstAndSecondEventsHandled);
 
     // Test another event twice
     assertEquals(0, presenter.secondEventsHandled);
     eventBus.fireEvent(new SecondEvent());
     eventBus.fireEvent(new SecondEvent());
     assertEquals(2, presenter.secondEventsHandled);
+    assertEquals(3, presenter.firstAndSecondEventsHandled);
   }
 
   public void testEventBinder_unbindEventHandlers() {
@@ -57,27 +60,34 @@ public class EventBinderTest extends GWTTestCase {
     TestPresenter.MyEventBinder binder = GWT.create(TestPresenter.MyEventBinder.class);
     HandlerRegistration registration = binder.bindEventHandlers(presenter, eventBus);
     assertEquals(0, presenter.firstEventsHandled);
+    assertEquals(0, presenter.firstEventsWithoutParameterHandled);
     assertEquals(0, presenter.secondEventsHandled);
 
     // Before unregistering
     eventBus.fireEvent(new FirstEvent());
     eventBus.fireEvent(new SecondEvent());
     assertEquals(1, presenter.firstEventsHandled);
+    assertEquals(1, presenter.firstEventsWithoutParameterHandled);
     assertEquals(1, presenter.secondEventsHandled);
+    assertEquals(2, presenter.firstAndSecondEventsHandled);
 
     // After unregistering
     registration.removeHandler();
     eventBus.fireEvent(new FirstEvent());
     eventBus.fireEvent(new SecondEvent());
     assertEquals(1, presenter.firstEventsHandled);
+    assertEquals(1, presenter.firstEventsWithoutParameterHandled);
     assertEquals(1, presenter.secondEventsHandled);
+    assertEquals(2, presenter.firstAndSecondEventsHandled);
 
     // After re-registering
     binder.bindEventHandlers(presenter, eventBus);
     eventBus.fireEvent(new FirstEvent());
     eventBus.fireEvent(new SecondEvent());
     assertEquals(2, presenter.firstEventsHandled);
+    assertEquals(2, presenter.firstEventsWithoutParameterHandled);
     assertEquals(2, presenter.secondEventsHandled);
+    assertEquals(4, presenter.firstAndSecondEventsHandled);
   }
 
   public void testEventBinder_withLegacyEventBus() {
@@ -104,6 +114,7 @@ public class EventBinderTest extends GWTTestCase {
 
     // FirstEvent has a handler in both classes, so it should be handled twice
     assertEquals(1, presenter.firstEventsHandled);
+    assertEquals(1, presenter.firstEventsWithoutParameterHandled);
     assertEquals(1, presenter.subclassFirstEventsHandled);
 
     // SecondEvent's handler is overridden in the subclass, so it should only be handled there
@@ -112,6 +123,9 @@ public class EventBinderTest extends GWTTestCase {
 
     // ThirdEvent is only handled in the superclass
     assertEquals(1, presenter.thirdEventsHandled);
+
+    // First+Second events are handled in superclass
+    assertEquals(2, presenter.firstAndSecondEventsHandled);
   }
 
 
@@ -121,6 +135,8 @@ public class EventBinderTest extends GWTTestCase {
     int firstEventsHandled;
     int secondEventsHandled;
     int thirdEventsHandled;
+    int firstAndSecondEventsHandled;
+    int firstEventsWithoutParameterHandled;
 
     @EventHandler
     void onFirstEvent(FirstEvent e) {
@@ -135,6 +151,16 @@ public class EventBinderTest extends GWTTestCase {
     @EventHandler
     void onThirdEvent(ThirdEvent e) {
       thirdEventsHandled++;
+    }
+
+    @EventHandler(handles = {FirstEvent.class, SecondEvent.class})
+    void onFirstAndSecondEvent(GenericEvent event) {
+      firstAndSecondEventsHandled++;
+    }
+
+    @EventHandler(handles = {FirstEvent.class})
+    void onFirstEventWithoutParameter() {
+        firstEventsWithoutParameterHandled++;
     }
   }
 
