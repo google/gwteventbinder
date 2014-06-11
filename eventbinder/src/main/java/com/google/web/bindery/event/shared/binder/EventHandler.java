@@ -49,4 +49,42 @@ import java.lang.annotation.Target;
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
-public @interface EventHandler {}
+public @interface EventHandler {
+
+  /**
+   * <p>Events that should be handled by the annotated method.</p>
+   *
+   * <p>If handles array is empty (default) then the method handles only event
+   * of type of the method's parameter and in this case the method's parameter
+   * is required. If handles array is not empty the method's parameter may be
+   * omitted.</p>
+   *
+   * <p>Every event type from this array should be assignable to the parameter
+   * of the method.</p>
+   *
+   * <p>Examples:</p>
+   * <ul>
+   *     <li>Method onEvent1 handles only EventOne</li>
+   *     <li>Method onEvent2 handles EventOne and EventTwo without event parameter</li>
+   *     <li>Method onEvent3 handles EventOne and EventTwo and has event parameter</li>
+   * </ul>
+   *
+   * <pre>
+   * {@literal @}EventHandler
+   * void onEvent1(EventOne event) {
+   *   doSomething1();
+   * }
+   * {@literal @}EventHandler(handles = {EventOne.class, EventTwo.class})
+   * void onEvent2() {
+   *   doSomething2();
+   * }
+   *
+   * {@literal @}EventHandler(handles = {EventOne.class, EventTwo.class})
+   * void onEvent3(ParentOfEventOneAndTwo event) {
+   *   doSomething3();
+   * }
+   * </pre>
+   *
+   */
+  Class<? extends GenericEvent>[] handles() default {};
+}

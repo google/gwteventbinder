@@ -56,7 +56,7 @@ public class EventBinderGenerator extends Generator {
         new EventBinderWriter(
             logger,
             context.getTypeOracle().getType(GenericEvent.class.getCanonicalName()))
-                .writeDoBindEventHandlers(targetType, writer);
+                .writeDoBindEventHandlers(targetType, writer, context.getTypeOracle());
         writer.commit(logger);
       }
       return getFullyQualifiedGeneratedClassName(eventBinderType);

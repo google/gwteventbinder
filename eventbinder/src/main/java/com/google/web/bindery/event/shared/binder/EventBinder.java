@@ -43,6 +43,7 @@ import com.google.web.bindery.event.shared.HandlerRegistration;
  *   // Interesting stuff goes here...
  * }
  * </pre>
+ * See {@link EventHandler} for more usage examples.
  *
  * @param <T> type of object being bound, which should be the same as the type
  *        enclosing this interface

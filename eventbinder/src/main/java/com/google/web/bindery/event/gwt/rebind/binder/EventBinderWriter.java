@@ -20,8 +20,13 @@ import com.google.gwt.core.ext.TreeLogger.Type;
 import com.google.gwt.core.ext.UnableToCompleteException;
 import com.google.gwt.core.ext.typeinfo.JClassType;
 import com.google.gwt.core.ext.typeinfo.JMethod;
+import com.google.gwt.core.ext.typeinfo.TypeOracle;
 import com.google.gwt.user.rebind.SourceWriter;
 import com.google.web.bindery.event.shared.binder.EventHandler;
+import com.google.web.bindery.event.shared.binder.GenericEvent;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Writes implementations of
@@ -42,12 +47,13 @@ class EventBinderWriter {
     this.genericEventType = genericEventType;
   }
 
-  void writeDoBindEventHandlers(JClassType target, SourceWriter writer)
+  void writeDoBindEventHandlers(JClassType target, SourceWriter writer, TypeOracle typeOracle)
       throws UnableToCompleteException {
     writeBindMethodHeader(writer, target.getQualifiedSourceName());
     for (JMethod method : target.getInheritableMethods()) {
-      if (method.getAnnotation(EventHandler.class) != null) {
-        writeHandlerForBindMethod(writer, method);
+      EventHandler annotation = method.getAnnotation(EventHandler.class);
+      if (annotation != null) {
+        writeHandlerForBindMethod(annotation, writer, method, typeOracle);
       }
     }
     writeBindMethodFooter(writer);
@@ -62,23 +68,55 @@ class EventBinderWriter {
         "List<HandlerRegistration> registrations = new LinkedList<HandlerRegistration>();");
   }
 
-  private void writeHandlerForBindMethod(SourceWriter writer, JMethod method)
-      throws UnableToCompleteException {
-    if (method.getParameterTypes().length != 1
-        || method.getParameterTypes()[0].isClassOrInterface() == null
-        || method.getParameterTypes()[0].isClassOrInterface().isAbstract()
-        || !method.getParameterTypes()[0].isClassOrInterface().isAssignableTo(genericEventType)) {
+  private void writeHandlerForBindMethod(EventHandler annotation, SourceWriter writer,
+      JMethod method, TypeOracle typeOracle) throws UnableToCompleteException {
+    JClassType eventParameter = null;
+    if (method.getParameterTypes().length == 1) {
+      eventParameter = method.getParameterTypes()[0].isClassOrInterface();
+    }
+    if (annotation.handles().length == 0 && !isAConcreteGenericEvent(eventParameter)) {
       logger.log(Type.ERROR, "Method " + method.getName()
-          + " annotated with @EventHandler must have exactly one argument of a concrete type "
-          + "assignable to GenericEvent");
+          + " annotated with @EventHandler without event classes must have exactly "
+          + "one argument of a concrete type assignable to GenericEvent");
       throw new UnableToCompleteException();
     }
-    String eventType = method.getParameterTypes()[0].getQualifiedSourceName();
-    writer.println("bind(eventBus, registrations, %s.class, new GenericEventHandler() {",
-        eventType);
-    writer.indentln("public void handleEvent(GenericEvent event) { target.%s((%s) event); }",
-        method.getName(), eventType);
-    writer.println("});");
+
+    List<String> eventTypes = new ArrayList<String>();
+    if (annotation.handles().length != 0) {
+      for (Class<? extends GenericEvent> event : annotation.handles()) {
+        String eventTypeName = event.getCanonicalName();
+        JClassType eventClassType = typeOracle.findType(eventTypeName);
+        if (eventClassType == null) {
+          logger.log(Type.ERROR, "Can't resolve " + eventTypeName);
+          throw new UnableToCompleteException();
+        }
+        if (eventParameter != null && !eventClassType.isAssignableTo(eventParameter)) {
+          logger.log(Type.ERROR, "Event " + eventTypeName + " isn't assignable to "
+              + eventParameter.getName() + " in method: " + method.getName());
+          throw new UnableToCompleteException();
+        }
+        eventTypes.add(eventClassType.getQualifiedSourceName());
+      }
+    } else {
+      eventTypes.add(eventParameter.getQualifiedSourceName());
+    }
+
+    for (String eventType : eventTypes) {
+      writer.println("bind(eventBus, registrations, %s.class, new GenericEventHandler() {",
+          eventType);
+      if (eventParameter != null) {
+        writer.indentln("public void handleEvent(GenericEvent event) { target.%s((%s) event); }",
+            method.getName(), eventType);
+      } else {
+        writer.indentln("public void handleEvent(GenericEvent event) { target.%s(); }", 
+            method.getName());
+      }
+      writer.println("});");
+    }
+  }
+
+  private boolean isAConcreteGenericEvent(JClassType param) {
+    return param != null && !param.isAbstract() && param.isAssignableTo(genericEventType);
   }
 
   private void writeBindMethodFooter(SourceWriter writer) {
