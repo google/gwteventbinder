@@ -73,6 +73,43 @@ class EmailPresenter {
 After `bindEventHandlers` is called, `onEmailLoaded` will be invoked whenever an
 `EmailLoadedEvent` is fired on the given event bus.
 
+It's possible to handle several events in one method. In this case you must
+enumerate these event classes in `handles` property of `@EventHandler` annotation
+and event parameter must be a superclass for all of these events. Also if
+`handles` is specified and you don't need event parameter you may omit it.
+
+```java
+class SuperEvent extends GenericEvent { }
+
+class EventOne extends SuperEvent { }
+
+class EventTwo extends SuperEvent { }
+
+class FormPresenter {
+  interface MyEventBinder extends EventBinder<FormPresenter> {}
+  private final MyEventBinder eventBinder = GWT.create(MyEventBinder.class);
+
+  FormPresenter(EventBus eventBus) {
+    eventBinder.bindEventHandlers(this, eventBus);
+  }
+
+  @EventHandler
+  void onEventOne(EventOne event) {
+    // handler for EventOne
+  }
+
+  @EventHandler(handles = {EventOne.class, EventTwo.class})
+  void onEventOneAndTwo(SuperEvent event) {
+    // handler for EventOne and EventTwo
+  }
+
+  @EventHandler(handles = {EventOne.class, EventTwo.class})
+  void onEventOneAndTwo2() {
+    // handler for EventOne and EventTwo without parameter
+  }
+}
+```
+
 ### Firing events
 
 The last step is easy and doesn't require anything special from EventBinder -
