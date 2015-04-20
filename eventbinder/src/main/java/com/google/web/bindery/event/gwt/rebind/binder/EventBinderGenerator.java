@@ -89,7 +89,7 @@ public class EventBinderGenerator extends Generator {
         new ClassSourceFileComposerFactory(packageName, simpleName);
 
     composer.setSuperclass(AbstractEventBinder.class.getCanonicalName()
-        + "<" + targetType.getName() + ">");
+        + "<" + targetType.getQualifiedSourceName() + ">");
     composer.addImplementedInterface(eventBinderType.getName());
 
     composer.addImport(EventBinder.class.getCanonicalName());

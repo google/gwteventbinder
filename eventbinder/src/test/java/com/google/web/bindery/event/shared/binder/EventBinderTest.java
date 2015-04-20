@@ -20,6 +20,7 @@ import com.google.gwt.junit.client.GWTTestCase;
 import com.google.web.bindery.event.shared.EventBus;
 import com.google.web.bindery.event.shared.HandlerRegistration;
 import com.google.web.bindery.event.shared.SimpleEventBus;
+import com.google.web.bindery.event.shared.binder.subpackage.SomeActivity;
 
 /**
  * End-to-end test of {@link EventBinder} and associated classes.
@@ -128,8 +129,20 @@ public class EventBinderTest extends GWTTestCase {
     assertEquals(2, presenter.firstAndSecondEventsHandled);
   }
 
+  // https://github.com/google/gwteventbinder/issues/28
+  public void testEventBinder_inDifferentPackage() {
+    EventBus eventBus = new SimpleEventBus();
+    TestPresenter presenter = new TestPresenter();
+    SomeActivity.SomeEventBinder binder = GWT.create(SomeActivity.SomeEventBinder.class);
+    binder.bindEventHandlers(presenter, eventBus);
 
-  static class TestPresenter {
+    // Test one event
+    assertEquals(0, presenter.firstEventsHandled);
+    eventBus.fireEvent(new FirstEvent());
+    assertEquals(1, presenter.firstEventsHandled);
+  }
+
+  public static class TestPresenter {
     interface MyEventBinder extends EventBinder<TestPresenter> {}
 
     int firstEventsHandled;
@@ -139,27 +152,27 @@ public class EventBinderTest extends GWTTestCase {
     int firstEventsWithoutParameterHandled;
 
     @EventHandler
-    void onFirstEvent(FirstEvent e) {
+    public void onFirstEvent(FirstEvent e) {
       firstEventsHandled++;
     }
 
     @EventHandler
-    void onSecondEvent(SecondEvent e) {
+    public void onSecondEvent(SecondEvent e) {
       secondEventsHandled++;
     }
 
     @EventHandler
-    void onThirdEvent(ThirdEvent e) {
+    public void onThirdEvent(ThirdEvent e) {
       thirdEventsHandled++;
     }
 
     @EventHandler(handles = {FirstEvent.class, SecondEvent.class})
-    void onFirstAndSecondEvent(GenericEvent event) {
+    public void onFirstAndSecondEvent(GenericEvent event) {
       firstAndSecondEventsHandled++;
     }
 
     @EventHandler(handles = {FirstEvent.class})
-    void onFirstEventWithoutParameter() {
+    public void onFirstEventWithoutParameter() {
         firstEventsWithoutParameterHandled++;
     }
   }
@@ -177,12 +190,12 @@ public class EventBinderTest extends GWTTestCase {
 
     @Override
     @EventHandler
-    void onSecondEvent(SecondEvent e) {
+    public void onSecondEvent(SecondEvent e) {
       subclassSecondEventsHandled++;
     }
   }
 
-  static class FirstEvent extends GenericEvent {}
-  static class SecondEvent extends GenericEvent {}
-  static class ThirdEvent extends GenericEvent {}
+  public static class FirstEvent extends GenericEvent {}
+  public static class SecondEvent extends GenericEvent {}
+  public static class ThirdEvent extends GenericEvent {}
 }
